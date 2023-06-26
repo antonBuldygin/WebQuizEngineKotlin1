@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpaBuddyIdeaProjectConfig" newRepositoryParent="org.springframework.data.jpa.repository.JpaRepository">
+    <option name="defaultUnitInitialized" value="true" />
+    <option name="renamerInitialized" value="true" />
+    <option name="reverseEngineeringLastDbConnectionId" value="4a40f331-8730-4fac-8737-32cfc7bc45ee" />
+    <option name="reLastEntityCreationPackage" value="Web Quiz Engine (Kotlin)/task/src/engine/entities" />
+    <option name="newEntityIdType" value="Long" />
+    <option name="newEntityIdStrategy" value="Identity" />
+  </component>
+</project>
