@@ -2,17 +2,11 @@ package engine
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import engine.dtos.QuizzDto
-import engine.entities.CompletedQuizeEntity
 import engine.entities.QuizzEntity
 import engine.entities.UserEntity
-import engine.repositories.CompletedQuizeEntityRepository
 import engine.repositories.QuizzEntityRepository
 import engine.repositories.UserEntityRepository
 import jakarta.validation.Valid
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Pageable
-import org.springframework.data.domain.Sort
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -21,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
-import java.time.LocalDateTime
 
 //import javax.validation.Valid
 
@@ -32,8 +25,7 @@ import java.time.LocalDateTime
 class Controller(
     private val quizzEntityRepository: QuizzEntityRepository,
     private val userEntityRepository: UserEntityRepository,
-    private val encoder: PasswordEncoder,
-    private val completedQuizeEntityRepository: CompletedQuizeEntityRepository
+    private val encoder: PasswordEncoder
 ) {
 
     //    val quizzes = mutableListOf<Quizz>()
@@ -118,15 +110,25 @@ class Controller(
     }
 
     @GetMapping("/api/quizzes")
-    fun getAllquizzes(
-        @AuthenticationPrincipal details: UserDetails,
-        @RequestParam("page") offset: Int
-    ): Page<QuizzEntity> {
+    fun getAllquizzes(@AuthenticationPrincipal details: UserDetails): ResponseEntity<String> {
+        val objectMapper = ObjectMapper()
+        var map = mutableListOf<QuizzDto>()
+        var getAsString: String = ""
 
-        val pagesAll = quizzEntityRepository.findAll(PageRequest.of(offset, 10))
-        println(pagesAll)
+        val findAll = quizzEntityRepository.findAll()
+        if (!findAll.isEmpty()) {
+            map = findAll.toList().stream().map { it -> QuizzDto(it.id, it.title, it.text, it.options) }.toList()
 
-        return pagesAll
+            getAsString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(map)
+
+
+        }
+
+        if (findAll.isEmpty()) {
+            getAsString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(map)
+        }
+
+        return ResponseEntity(getAsString, HttpStatus.OK)
     }
 
     @GetMapping("/api/quizzes/{id}")
@@ -159,7 +161,6 @@ class Controller(
         @RequestBody answer: Answer
     ): ResponseEntity<String> {
         val filter = quizzEntityRepository.findAll().stream().filter { c -> c.id == id.toInt() }.findAny()
-        val user = userEntityRepository.findByEmail(details.username)
         var res: String = ""
         if (filter.isEmpty) {
             return ResponseEntity("404 NOT FOUND", HttpStatus.NOT_FOUND)
@@ -169,10 +170,7 @@ class Controller(
 
         val answer1 = filter.get().answer.toIntArray()
         val answer2 = answer.answer.toIntArray()
-        println("правильный ответ ${answer1.contentToString()}")
-        println("ответ ${answer2.contentToString()}")
-        println("номер $id")
-        println("квизОбъект ${filter.toString()}")
+
         if (!answer1.contentEquals(answer2)) {
             res =
                 """{
@@ -189,30 +187,10 @@ class Controller(
   "success": true,
   "feedback": "Congratulations, you're right!"
 }"""
-            val completedQuizeEntity = CompletedQuizeEntity(filter.get().id?.toLong(), user, LocalDateTime.now())
-            user.solvedQuizzEntities.add(completedQuizeEntity)
-            completedQuizeEntityRepository.save(completedQuizeEntity)
+
 
         }
 
         return ResponseEntity(res, HttpStatus.OK)
-    }
-
-    @GetMapping("/api/quizzes/completed")
-    fun completedQuizzes(
-        @AuthenticationPrincipal details: UserDetails,
-        @RequestParam("page") offset: Int,
-        pageable: Pageable
-    ): Page<CompletedQuizeEntity>? {
-        var findAllById: Page<CompletedQuizeEntity>? = null
-        val user = userEntityRepository.findByEmail(details.username)
-        val foundCompletedQuiz =
-            completedQuizeEntityRepository.findByUserOrderByCompletedAtDesc(user, PageRequest.of(offset,10 ))
-
-      val  t :Page<CompletedQuizeEntity>? =null
-        val n= 6+8
-
-
-        return foundCompletedQuiz
     }
 }
