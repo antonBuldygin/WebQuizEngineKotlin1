@@ -50,7 +50,7 @@ class Controller {
 
 
     @PostMapping("/api/quizzes/{id}/solve")
-    fun solvingQuizz(@PathVariable id: String, @RequestBody answer: Answer): ResponseEntity<String> {
+    fun solvingQuizz(@PathVariable id: String, @RequestParam answer: String): ResponseEntity<String> {
         val filter = quizzes.stream().filter { c -> c.id == id.toInt() }.findAny()
         var res: String = ""
         if (filter.isEmpty) {
@@ -58,11 +58,7 @@ class Controller {
         }
 
         val objectMapper = ObjectMapper()
-
-        val answer1 = filter.get().answer
-        val answer2 = answer.answer
-
-        if (!answer1 .equals(answer2)) {
+        if (filter.get().answer != answer.toInt()) {
             res =
                 """{
   "success": false,
@@ -72,7 +68,7 @@ class Controller {
 
         }
 
-        if (answer1 .equals(answer2)) {
+        if (filter.get().answer == answer.toInt()) {
             res =
                 """{
   "success": true,

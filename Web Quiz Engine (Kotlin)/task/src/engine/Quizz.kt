@@ -9,7 +9,8 @@ data class Quizz(
     var id: Int = 0,
     val title: String, val text: String, val options: MutableList<String>,
 ) {
-    var answer:MutableList<Int> = mutableListOf()
+
+    var answer: Int =0
         @JsonIgnore
         get() {return field}
         @JsonProperty("answer")
