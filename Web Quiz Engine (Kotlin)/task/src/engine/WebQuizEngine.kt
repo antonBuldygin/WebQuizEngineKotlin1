@@ -2,8 +2,6 @@ package engine
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
-import org.springframework.context.annotation.ComponentScan
-import org.springframework.context.annotation.Configuration
 
 @SpringBootApplication
 open class WebQuizEngine {
@@ -13,5 +11,4 @@ open class WebQuizEngine {
             runApplication<WebQuizEngine>(*args)
         }
     }
-
 }

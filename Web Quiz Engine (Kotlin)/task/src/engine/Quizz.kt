@@ -1,38 +1,17 @@
 package engine
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.NotEmpty
-import javax.validation.constraints.Size
 
 
-
-/**
- * DTO for {@link engine.entities.QuizzEntity}
- */
 data class Quizz(
     var id: Int = 0,
-
-    ) {
-
-    @NotEmpty
-    @NotBlank
-    var title: String = "3"
-
-    @NotEmpty
-    @NotBlank
-    var text: String = ""
-
-    @Size(min = 2)
-    val options: MutableList<String> = mutableListOf()
-
-
-    var answer: MutableList<Int> = mutableListOf()
+    val title: String, val text: String, val options: MutableList<String>,
+) {
+    var answer:MutableList<Int> = mutableListOf()
         @JsonIgnore
-        get() {
-            return field
-        }
+        get() {return field}
         @JsonProperty("answer")
         set(value) {
             field = value
@@ -49,6 +28,8 @@ data class Quizz(
 
     init {
         id = Quantity.number
+
+
 
 
     }
