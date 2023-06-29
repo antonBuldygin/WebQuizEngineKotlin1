@@ -965,6 +965,18 @@ files:
 - name: src/engine/repositories/UserEntityRepository.kt
   visible: true
   learner_created: true
+- name: src/engine/UserDetailsImpl.kt
+  visible: true
+  learner_created: true
+- name: src/engine/UserDetailsServiceImpl.kt
+  visible: true
+  learner_created: true
+- name: src/engine/WebSecurityConfigurerImpl.kt
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/24909#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Wed, 28 Jun 2023 20:54:46 UTC"
 record: 5

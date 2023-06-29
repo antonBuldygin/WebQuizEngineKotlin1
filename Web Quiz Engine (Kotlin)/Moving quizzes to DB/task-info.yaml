@@ -640,8 +640,5 @@ files:
   visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/learn/step/24908#comment
-status: Solved
-feedback:
-  message: Congratulations!
-  time: "Sun, 18 Jun 2023 10:26:28 UTC"
+status: Failed
 record: 4

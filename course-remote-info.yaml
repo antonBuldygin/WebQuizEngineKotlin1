@@ -3,7 +3,7 @@ hyperskill_project:
   ide_files: https://cogniterra.org/media/attachments/lesson/27297/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: "Mon, 26 Jun 2023 07:52:00 UTC"
+update_date: "Thu, 29 Jun 2023 16:02:26 UTC"
 stages:
 - id: 1773
   step: 24905
@@ -19,10 +19,10 @@ stages:
   is_completed: true
 - id: 1777
   step: 24909
-  is_completed: false
+  is_completed: true
 - id: 1778
   step: 24910
-  is_completed: false
+  is_completed: true
 topics:
   0:
   - title: Binary numbers
@@ -322,6 +322,8 @@ topics:
     theory_id: 4657
   - title: Functions as objects
     theory_id: 5991
+  - title: Lambda expressions
+    theory_id: 30148
   - title: What is a bug
     theory_id: 5504
   - title: Functional testing
