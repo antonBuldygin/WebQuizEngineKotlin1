@@ -1,16 +1,10 @@
 package engine.entities
 
-import jakarta.persistence.*
-import jakarta.validation.Valid
-import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.NotEmpty
-import jakarta.validation.constraints.Size
-
-//import javax.persistence.*
-//import javax.validation.Valid
-//import javax.validation.constraints.NotBlank
-//import javax.validation.constraints.NotEmpty
-//import javax.validation.constraints.Size
+import javax.persistence.*
+import javax.validation.Valid
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotEmpty
+import javax.validation.constraints.Size
 
 @Entity
 @Table(name = "quizz_entity")
@@ -29,11 +23,6 @@ open class QuizzEntity {
     @NotBlank
     @NotEmpty
     open var text: String? = null
-
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    open var user: UserEntity? = null
 
     @ElementCollection
     @Valid
